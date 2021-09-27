@@ -1,0 +1,47 @@
+---
+title: "PeerAssessment1_DA"
+author: "DIMITRIOS ANDRIOPOULOS"
+date: "9/21/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Data load & pre-process
+
+
+```{r load, echo= TRUE}
+temp <- tempfile()
+download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
+df <- read.csv(unz(temp, "activity.csv"))
+unlink(temp)
+df<-data.frame(df)
+df<-transform(df, df$date<-as.numeric(df$date))
+summary(df)
+```
+
+## 2. What is mean total number of steps taken per day?
+
+Next, I calculate the mean of the total number of steps (ignoring missing values)
+
+```{r plots, echo=TRUE, message=FALSE}
+library(dplyr)
+mean_df<-aggregate(steps ~ date, df, sum)
+mean_answer<-mean(mean_df$steps)
+print(mean_answer)
+mean_df$date<-as.Date(mean_df$date)
+hist(mean_df$steps, xlab = "Total number of steps per day", main = "Histogram of total number of steps taken each day")
+summary(mean_df$steps)
+```
+
+## 3. What is the average daily activity pattern?
+```{r plots, echo=TRUE, message=FALSE}
+#install.packages("lubridate")
+library(lubridate)
+str(df) # This shows that the time-variable has to be put back to date format.
+df$date.format<-ymd(df$date)
+
+```
+
