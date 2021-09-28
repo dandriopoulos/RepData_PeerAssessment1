@@ -1,7 +1,7 @@
 ---
 output:
-  html_document:
-    keep_md: yes
+  github_document:
+    keep_html: true
 title: "PeerAssessment1_DA" 
 author: "Dimitrios Andriopoulos"
 date: "09/29/2021"
