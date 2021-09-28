@@ -1,15 +1,14 @@
 ---
 title: "PeerAssessment1_DA" 
-
+author: "Dimitrios Andriopoulos"
+date: "09/29/2021"
 output:
-  html_document: 
-    keep_md: true
-    
+  html_document:
+    keep_md: yes
 ---
 
 ```{r global_options, include=FALSE}
-rm(list = ls())
-library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## 1. Data load & pre-process
