@@ -11,8 +11,6 @@ output:
 
 ## 1. Data load & pre-process
 
-
-
 ```r
 temp <- tempfile()
 download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
@@ -20,14 +18,6 @@ df <- read.csv(unz(temp, "activity.csv"))
 unlink(temp)
 df<-data.frame(df)
 df<-transform(df, df$date<-as.numeric(df$date))
-```
-
-```
-## Warning in eval(substitute(list(...)), `_data`, parent.frame()): NAs introduced
-## by coercion
-```
-
-```r
 summary(df)
 ```
 
@@ -63,7 +53,7 @@ mean_df$date<-as.Date(mean_df$date)
 hist(mean_df$steps, xlab = "Total number of steps per day", main = "Histogram of total number of steps taken each day")
 ```
 
-![](PeerAssessment1_DA_files/figure-html/question 2-1.png)<!-- -->
+![](PeerAssessment1_DA_files/figure-html/chunk2-1.png)<!-- -->
 
 ```r
 summary(mean_df$steps)
@@ -83,7 +73,7 @@ p<-ggplot(mean_df3, aes(x=interval, y=steps))+geom_line()+xlab("5-minute interva
 p
 ```
 
-![](PeerAssessment1_DA_files/figure-html/question 3-1.png)<!-- -->
+![](PeerAssessment1_DA_files/figure-html/chunk3-1.png)<!-- -->
 
 ```r
 max_value<-mean_df3$interval[which.max(mean_df3$steps)]
@@ -136,7 +126,7 @@ mean_df_new$date<-as.Date(mean_df_new$date)
 hist(mean_df_new$steps, xlab = "Total number of steps per day", main = "Histogram of total number of steps taken each day (NA replaced)")
 ```
 
-![](PeerAssessment1_DA_files/figure-html/question 4.4-1.png)<!-- -->
+![](PeerAssessment1_DA_files/figure-html/chunk4.4-1.png)<!-- -->
 
 ```r
 summary(mean_df_new$steps)
@@ -169,4 +159,4 @@ d <- ggplot(m.df_new, aes(interval, steps)) + geom_line(color = "steelblue", siz
 d + facet_wrap(~ wk, nrow = 2)
 ```
 
-![](PeerAssessment1_DA_files/figure-html/question 5.2-1.png)<!-- -->
+![](PeerAssessment1_DA_files/figure-html/chunk5.2-1.png)<!-- -->

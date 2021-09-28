@@ -178,10 +178,8 @@ download.file(&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factiv
 df &lt;- read.csv(unz(temp, &quot;activity.csv&quot;))
 unlink(temp)
 df&lt;-data.frame(df)
-df&lt;-transform(df, df$date&lt;-as.numeric(df$date))</code></pre>
-<pre><code>## Warning in eval(substitute(list(...)), `_data`, parent.frame()): NAs introduced
-## by coercion</code></pre>
-<pre class="r"><code>summary(df)</code></pre>
+df&lt;-transform(df, df$date&lt;-as.numeric(df$date))
+summary(df)</code></pre>
 <pre><code>##      steps            date              interval     
 ##  Min.   :  0.00   Length:17568       Min.   :   0.0  
 ##  1st Qu.:  0.00   Class :character   1st Qu.: 588.8  

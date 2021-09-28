@@ -12,9 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## 1. Data load & pre-process
-
-
-```{r load, echo= TRUE}
+```{r chunk1, echo= TRUE, warning =FALSE}
 temp <- tempfile()
 download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip",temp)
 df <- read.csv(unz(temp, "activity.csv"))
@@ -28,7 +26,7 @@ summary(df)
 
 Next, I calculate the mean of the total number of steps (ignoring missing values)
 
-```{r question 2, echo=TRUE, message=FALSE}
+```{r  chunk2, echo=TRUE, message=FALSE, warning =FALSE}
 library(dplyr)
 mean_df<-aggregate(steps ~ date, df, sum)
 mean_answer<-mean(mean_df$steps)
@@ -39,7 +37,7 @@ summary(mean_df$steps)
 ```
 
 ## 3. What is the average daily activity pattern?
-```{r question 3, echo=TRUE, message=FALSE}
+```{r chunk3, echo=TRUE, message=FALSE, warning =FALSE}
 library(ggplot2)
 mean_df3<-aggregate(steps ~ interval, df, mean)
 p<-ggplot(mean_df3, aes(x=interval, y=steps))+geom_line()+xlab("5-minute interval (min)")+ylab("Average number of steps taken (# of steps)")
@@ -51,7 +49,7 @@ print(paste("The 5-minute interval corresponding to the maximum number of steps,
 ## 4. Imputing missing values
 ### Questions 1 & 2 & 3
 Below, you can find trhe reported missing values in the dataset, as well as my strategy to replace the missing values. Specifically, I have replaced all missing step-values by the mean steps during the corresponding 5-minute interval.
-```{r question 4, echo=TRUE, message=FALSE}
+```{r chunk4, echo=TRUE, message=FALSE, warning =FALSE}
 library(ggplot2)
 df.old<-df
 count_NA<-sum(is.na(df$steps))
@@ -66,7 +64,7 @@ for (i in 1:length(df.old$steps))
 df_new<-df.old
 ```
 ### Question 4
-``` {r question 4.4, echo = TRUE, message = FALSE}
+``` {r chunk4.4, echo = TRUE, message = FALSE, warning =FALSE}
 mean_df_new<-aggregate(steps ~ date, df_new, sum)
 mean_answer_new<-mean(mean_df_new$steps)
 print(mean_answer_new)
@@ -78,7 +76,7 @@ As can be seen above, the mean and median between the original and imputed data 
 
 ## 5.Are there differences in activity patterns between weekdays and weekends?
 ### Question 1: Weekdays vs weekends
-``` {r question 5.1, echo = TRUE, message = FALSE}
+``` {r chunk5.1, echo = TRUE, message = FALSE, warning =FALSE}
 library(dplyr)
 df_new$date<-as.Date(df_new$date)
 fun.day<-function(x) weekdays(x)
@@ -88,11 +86,9 @@ df_new$wk<-as.factor(if_else(substr(weekdays(df_new$date),1,1)=="S", "weekend","
 ### Plot 
 Indeed, from the plot below we can observe that during weekdays, activity levels peak during earlier in the day. This makes sense given that people tend to be at work later in the day. On the contrary, people tend to have a periodic activity level that ebbs and flows during the day.
 
-``` {r question 5.2, echo = TRUE, message = FALSE}
+``` {r chunk5.2, echo = TRUE, message = FALSE, warning =FALSE}
 library(ggplot2)
 m.df_new<-aggregate(steps ~ interval + wk, df_new, mean)
 d <- ggplot(m.df_new, aes(interval, steps)) + geom_line(color = "steelblue", size = 0.5) + theme(aspect.ratio = 1)
 d + facet_wrap(~ wk, nrow = 2)
-
-
 ```
