@@ -1,14 +1,9 @@
 ---
-title: "PeerAssessment1_DA"
-author: "DIMITRIOS ANDRIOPOULOS"
-date: "9/21/2021"
+title: "PeerAssessment1_DA" 
 output:
   html_document: 
-    keep_md: yes
+    keep_md: true
 ---
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## 1. Data load & pre-process
 ```{r chunk1, echo= TRUE, warning =FALSE}

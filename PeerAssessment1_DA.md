@@ -1,12 +1,9 @@
 ---
-title: "PeerAssessment1_DA"
-author: "DIMITRIOS ANDRIOPOULOS"
-date: "9/21/2021"
+title: "PeerAssessment1_DA" 
 output:
   html_document: 
-    keep_md: yes
+    keep_md: true
 ---
-
 
 ## 1. Data load & pre-process
 
