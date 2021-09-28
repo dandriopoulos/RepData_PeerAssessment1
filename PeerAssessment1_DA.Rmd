@@ -2,11 +2,10 @@
 title: "PeerAssessment1_DA"
 author: "DIMITRIOS ANDRIOPOULOS"
 date: "9/21/2021"
-output: 
+output:
   html_document: 
     keep_md: yes
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
