@@ -72,4 +72,24 @@ mean_df_new$date<-as.Date(mean_df_new$date)
 hist(mean_df_new$steps, xlab = "Total number of steps per day", main = "Histogram of total number of steps taken each day (NA replaced)")
 summary(mean_df_new$steps)
 ```
-As can be seen above, the mean and median between the original and imputed datasets are similar; something to be expected, given that I replaced "NAs" with mean values for the corresponding 5-minute intervals. What does change, however, is that the frequency of total number of steps increases in the imputed data set. 
+As can be seen above, the mean and median between the original and imputed data sets are similar; something to be expected, given that I replaced "NAs" with mean values for the corresponding 5-minute intervals. What does change, however, is that the frequency of total number of steps increases in the imputed data set. 
+
+## 5.Are there differences in activity patterns between weekdays and weekends?
+### Question 1: Weekdays vs weekends
+``` {r question 5.1, echo = TRUE, message = FALSE}
+library(dplyr)
+df_new$date<-as.Date(df_new$date)
+fun.day<-function(x) weekdays(x)
+df_new$wk<-as.factor(if_else(substr(weekdays(df_new$date),1,1)=="S", "weekend","weekday"))
+```
+
+### Plot 
+Indeed, from the plot below we can observe that during weekdays, activity levels peak during earlier in the day. This makes sense given that people tend to be at work later in the day. On the contrary, people tend to have a periodic activity level that ebbs and flows during the day.
+``` {r question 5.2, echo = TRUE, message = FALSE}
+library(ggplot2)
+m.df_new<-aggregate(steps ~ interval + wk, df_new, mean)
+d <- ggplot(m.df_new, aes(interval, steps)) + geom_line(color = "steelblue", size = 0.5) + theme(aspect.ratio = 1)
+d + facet_wrap(~ wk, nrow = 2)
+
+
+```
