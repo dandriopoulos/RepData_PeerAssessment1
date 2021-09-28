@@ -26,7 +26,7 @@ summary(df)
 
 Next, I calculate the mean of the total number of steps (ignoring missing values)
 
-```{r plots, echo=TRUE, message=FALSE}
+```{r question 2, echo=TRUE, message=FALSE}
 library(dplyr)
 mean_df<-aggregate(steps ~ date, df, sum)
 mean_answer<-mean(mean_df$steps)
@@ -37,11 +37,39 @@ summary(mean_df$steps)
 ```
 
 ## 3. What is the average daily activity pattern?
-```{r plots, echo=TRUE, message=FALSE}
-#install.packages("lubridate")
-library(lubridate)
-str(df) # This shows that the time-variable has to be put back to date format.
-df$date.format<-ymd(df$date)
-
+```{r question 3, echo=TRUE, message=FALSE}
+library(ggplot2)
+mean_df3<-aggregate(steps ~ interval, df, mean)
+p<-ggplot(mean_df3, aes(x=interval, y=steps))+geom_line()+xlab("5-minute interval (min)")+ylab("Average number of steps taken (# of steps)")
+p
+max_value<-mean_df3$interval[which.max(mean_df3$steps)]
+print(paste("The 5-minute interval corresponding to the maximum number of steps, on average across all days, is", max_value))
 ```
 
+## 4. Imputing missing values
+### Questions 1 & 2 & 3
+Below, you can find trhe reported missing values in the dataset, as well as my strategy to replace the missing values. Specifically, I have replaced all missing step-values by the mean steps during the corresponding 5-minute interval.
+```{r question 4, echo=TRUE, message=FALSE}
+library(ggplot2)
+df.old<-df
+count_NA<-sum(is.na(df$steps))
+print(paste0("The number of dates with NA is ",count_NA))
+for (i in 1:length(df.old$steps)) 
+  {
+  if (is.na(df.old$steps[i])) {
+    df.old$steps[i]<-mean_df3$steps[mean_df3$interval==df.old$interval[i]]}
+    else {
+      df.old$steps[i]}
+}
+df_new<-df.old
+```
+### Question 4
+``` {r question 4.4, echo = TRUE, message = FALSE}
+mean_df_new<-aggregate(steps ~ date, df_new, sum)
+mean_answer_new<-mean(mean_df_new$steps)
+print(mean_answer_new)
+mean_df_new$date<-as.Date(mean_df_new$date)
+hist(mean_df_new$steps, xlab = "Total number of steps per day", main = "Histogram of total number of steps taken each day (NA replaced)")
+summary(mean_df_new$steps)
+```
+As can be seen above, the mean and median between the original and imputed datasets are similar; something to be expected, given that I replaced "NAs" with mean values for the corresponding 5-minute intervals. What does change, however, is that the frequency of total number of steps increases in the imputed data set. 
